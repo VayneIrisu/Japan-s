@@ -3,28 +3,39 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password', 'notelp', 'alamat',
-    ];
+	use Notifiable;
+	public $timestamps = true;
+	protected $fillable = [
+		'password','level','username','email','status_id','status'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+	protected $hidden = [
+		'password', 'remember_token',
+	];
+
+	public function petanis()
+	{
+		return $this->hasMany('App\petani');
+	}
+	public function pemantau()
+	{
+		return $this->hasMany('App\pemantau');
+	}
+	public function kepalatanaman()
+	{
+		return $this->hasMany('App\kepalatanaman');
+	}
+	public function isAdmin()
+	{
+		if ($this->level == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

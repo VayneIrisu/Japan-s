@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\petani;
+use App\kepalatanaman;
+use App\pemantau;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -48,14 +50,31 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
+        if ($data['type'] == 'umum') {
+            return Validator::make($data, [
+                'username' => 'required|string|max:255|unique:users',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+        }else if ($data['type'] == 'petani') {
+            // dd('masuk');
+         return Validator::make($data, [
+            'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'notelp' => 'required|string|max:12',
-            'alamat' => 'required|string|max:255',
+            'ttl' => 'required|date_format:d-m-Y',
+            'status_hidup' => 'required',
+            'jenisKelamin' => 'required',
         ]);
-    }
+     }else if ($data['type'] == 'mitra') {
+            // dd('masuk');
+         return Validator::make($data, [
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+     }
+ }
 
     /**
      * Create a new user instance after a valid registration.
@@ -65,12 +84,76 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'notelp' => $data['notelp'],
-            'alamat' => $data['alamat'],
+
+        $username = str_slug($data['username'], '_');
+
+        if ($data['type'] == 'kepalatanaman') {
+          $user = User::create([
+            'username'  => $username,
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'level'     => 3,
+            'status_id'     => 2,
+            'status'     => 'setuju'
         ]);
+
+          kepalatanaman::create([
+            'name'     => $data['name'],
+            'nohp'     => $data['nohp'],
+            'email'     => $data['email'],
+            'alamat'     => $data['alamat'],
+            'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
+            // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
+            'user_id'     => $user->id,
+        ]);
+
+      }else if ($data['type'] == 'petani') {
+        // dd( $data['nik']);
+        $user = User::create([
+            'username'  => $username,
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'level'     => 1,
+            'status_id'     => 3,
+            'status'     => 'tidak'
+        ]);
+
+        petani::create([
+            'name'     => $data['name'],
+            'nohp'     => $data['nohp'],
+            'email'     => $data['email'],
+            'alamat'     => $data['alamat'],
+            'nik'     => $data['nik'],
+            'status'     => $data['status_hidup'],
+            'jenisKelamin'     => $data['jenisKelamin'],
+            'agama'     => $data['agama'],
+            'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
+            // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
+            'fotoKtp'     => $data['fotoKtp'],
+            'user_id'     => $user->id
+        ]);
+    }else if ($data['type'] == 'pemantau') {
+        $user = User::create([
+            'username'  => $username,
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'level'     => 2,
+            'status_id'     => 1,
+            'status'     => 'tidak'
+        ]);
+
+        pemantau::create([
+            'nama'     => $data['namaCv'],
+            'nohp'     => $data['nohp'],
+            'email'     => $data['email'],
+            'alamat'     => $data['alamat'],
+            'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
+            // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
+            'user_id'     => $user->id
+        ]);
+    }else{
+        abort(404);
     }
+
+}
 }
