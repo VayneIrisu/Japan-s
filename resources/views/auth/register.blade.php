@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <div class="backgroun-register">
+    <div class="background-register">
         <div class="col-md-4" id="left-regis">
             <div class="relatif-img">
               <i class="fa fa-times" aria-hidden="true"></i>
@@ -81,7 +81,7 @@
                             <label for="title" class="text-create-event">Confirm Password</label>
                             <input type="password" class="form-control" name="password_confirmation" required>
 
-                            <input type="hidden" name="type" class="form-control" value="umum" placeholder="alamat">
+                            <input type="hidden" name="type" class="form-control" value="kepalatanaman" placeholder="alamat">
                         </div>
                         <button type="submit">Submit</button>
                     </form>
@@ -253,7 +253,7 @@
                     @endif
                     <label for="title" class="text-create-event">Confirm Password</label>
                     <input type="password" class="form-control" name="password_confirmation" required>
-                    <input type="hidden" name="type" class="form-control" value="mitra" placeholder="alamat">
+                    <input type="hidden" name="type" class="form-control" value="pemantau" placeholder="alamat">
                 </div>
                 <button type="submit">Submit</button>
             </form>

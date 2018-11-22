@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\User;
+use App\kepalatanaman;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+      if(Auth::User()->level==3){
+        $umum = kepalatanaman::find(Auth::User()->id)->first();
+        return view('KepalaTanaman.index',compact('umum'));
+      }
+      elseif(Auth::User()->level==2){
+        $umum = petani::find(Auth::User()->id)->first();
+        return view('Petani.index',compact('umum'));
+      }
+      elseif(Auth::User()->level==1){
+        $umum = pemantau::find(Auth::User()->id)->first();
+        return view('Pemantau.index',compact('umum'));
+      }
+      else{
+      return view('home');
+      }
     }
 }

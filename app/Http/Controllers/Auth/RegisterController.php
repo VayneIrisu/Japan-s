@@ -50,7 +50,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if ($data['type'] == 'umum') {
+        if ($data['type'] == 'kepalatanaman') {
             return Validator::make($data, [
                 'username' => 'required|string|max:255|unique:users',
                 'email' => 'required|string|email|max:255|unique:users',
@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'status_hidup' => 'required',
             'jenisKelamin' => 'required',
         ]);
-     }else if ($data['type'] == 'mitra') {
+     }else if ($data['type'] == 'pemantau') {
             // dd('masuk');
          return Validator::make($data, [
             'username' => 'required|string|max:255|unique:users',
@@ -88,25 +88,29 @@ class RegisterController extends Controller
         $username = str_slug($data['username'], '_');
 
         if ($data['type'] == 'kepalatanaman') {
-          $user = User::create([
+          $pengg = ([
             'username'  => $username,
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 3,
-            'status_id'     => 2,
             'status'     => 'setuju'
         ]);
 
-          kepalatanaman::create([
-            'name'     => $data['name'],
-            'nohp'     => $data['nohp'],
-            'email'     => $data['email'],
+        $user = User::create($pengg);
+
+        $kepalatanaman = ([
+            'nama'     => $data['nama'],
+            'nik'      => $data['nik']
             'alamat'     => $data['alamat'],
+            'email'     => $data['email'],
+            'nohp'     => $data['nohp'],
             'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
             // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
             'user_id'     => $user->id,
         ]);
+        kepalatanaman::create($kepalatanaman);
 
+        return redirect('login');
       }else if ($data['type'] == 'petani') {
         // dd( $data['nik']);
         $user = User::create([
@@ -114,43 +118,47 @@ class RegisterController extends Controller
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 1,
-            'status_id'     => 3,
             'status'     => 'tidak'
         ]);
 
-        petani::create([
-            'name'     => $data['name'],
+        $petani = ([
+            'nama'     => $data['name'],
             'nohp'     => $data['nohp'],
-            'email'     => $data['email'],
-            'alamat'     => $data['alamat'],
             'nik'     => $data['nik'],
+            'alamat'     => $data['alamat'],
+            'email'     => $data['email'],
+            'agama'     => $data['agama'],
             'status'     => $data['status_hidup'],
             'jenisKelamin'     => $data['jenisKelamin'],
-            'agama'     => $data['agama'],
             'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
             // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
             'fotoKtp'     => $data['fotoKtp'],
             'user_id'     => $user->id
         ]);
+
+        petani::create($petani);
+        return redirect('login');
     }else if ($data['type'] == 'pemantau') {
         $user = User::create([
             'username'  => $username,
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 2,
-            'status_id'     => 1,
             'status'     => 'tidak'
         ]);
 
-        pemantau::create([
-            'nama'     => $data['namaCv'],
+        $pemantau = ([
+            'nama'     => $data['nama'],
             'nohp'     => $data['nohp'],
-            'email'     => $data['email'],
             'alamat'     => $data['alamat'],
+            'email'     => $data['email'],
             'image'     => "https://www.gravatar.com/avatar/". md5( strtolower( trim(  $data['email'] ) ) ) ."?d=monsterid",
             // 'image'     => "https://img00.deviantart.net/abf8/i/2017/028/d/3/souma_yukihira__shokugeki_no_souma__vector_by_greenmapple17-d9titiu.png",
             'user_id'     => $user->id
         ]);
+
+        pemantau::create($pemantau);
+        return redirect('login');
     }else{
         abort(404);
     }
