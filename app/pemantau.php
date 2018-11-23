@@ -4,6 +4,7 @@ namespace App;
 
 use Auth;
 use Illuminate\Database\Eloquent\Model;
+use app\User;
 
 class pemantau extends Model
 {
@@ -13,5 +14,8 @@ class pemantau extends Model
 	protected $fillable = [
 		'nama','nik','nohp','alamat','email','image','user_id'
 	];
-
+	public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

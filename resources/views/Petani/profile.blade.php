@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', $petani->name)
+@section('title', $petani->nama)
 @section('content')
 
 <div class="edit-profile">
@@ -12,10 +12,10 @@
 			<form action="/petani/{{ $petani->id }}" method="POST">
 				<div class="form-group">
 					<label for="name" style="display: block;">Nama</label>
-					<input type="text" name="name" placeholder="name" value="{{ old('name') ? old('name') : $petani->name  }}">
-					@if ($errors->has('name'))
+					<input type="text" name="nama" placeholder="nama" value="{{ old('nama') ? old('nama') : $petani->nama  }}">
+					@if ($errors->has('nama'))
 					<span class="help-block">
-						<strong>{{ $errors->first('name') }}</strong>
+						<strong>{{ $errors->first('nama') }}</strong>
 					</span>
 					@endif
 				</div>

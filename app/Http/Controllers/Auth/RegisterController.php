@@ -57,12 +57,10 @@ class RegisterController extends Controller
                 'password' => 'required|string|min:6|confirmed',
             ]);
         }else if ($data['type'] == 'petani') {
-            // dd('masuk');
-         return Validator::make($data, [
+          return Validator::make($data, [
             'username' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'ttl' => 'required|date_format:d-m-Y',
             'status_hidup' => 'required',
             'jenisKelamin' => 'required',
         ]);
@@ -84,7 +82,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
+// dd($data);
         $username = str_slug($data['username'], '_');
 
         if ($data['type'] == 'kepalatanaman') {
@@ -93,14 +91,13 @@ class RegisterController extends Controller
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 3,
-            'status'     => 'setuju'
         ]);
 
         $user = User::create($pengg);
-
+        // dd($user);
         $kepalatanaman = ([
             'nama'     => $data['nama'],
-            'nik'      => $data['nik']
+            'nik'      => $data['nik'],
             'alamat'     => $data['alamat'],
             'email'     => $data['email'],
             'nohp'     => $data['nohp'],
@@ -110,19 +107,17 @@ class RegisterController extends Controller
         ]);
         kepalatanaman::create($kepalatanaman);
 
-        return redirect('login');
+        return redirect('/login');
       }else if ($data['type'] == 'petani') {
-        // dd( $data['nik']);
         $user = User::create([
             'username'  => $username,
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 1,
-            'status'     => 'tidak'
         ]);
 
         $petani = ([
-            'nama'     => $data['name'],
+            'nama'     => $data['nama'],
             'nohp'     => $data['nohp'],
             'nik'     => $data['nik'],
             'alamat'     => $data['alamat'],
@@ -136,15 +131,17 @@ class RegisterController extends Controller
             'user_id'     => $user->id
         ]);
 
-        petani::create($petani);
-        return redirect('login');
+
+        $aa = petani::create($petani);
+
+                        // dd($aa);
+        return redirect('/login');
     }else if ($data['type'] == 'pemantau') {
         $user = User::create([
             'username'  => $username,
             'email'     => $data['email'],
             'password'  => bcrypt($data['password']),
             'level'     => 2,
-            'status'     => 'tidak'
         ]);
 
         $pemantau = ([
@@ -158,7 +155,7 @@ class RegisterController extends Controller
         ]);
 
         pemantau::create($pemantau);
-        return redirect('login');
+        return redirect('/login');
     }else{
         abort(404);
     }

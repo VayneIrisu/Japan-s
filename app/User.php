@@ -11,14 +11,14 @@ class User extends Authenticatable
 	use Notifiable;
 	public $timestamps = true;
 	protected $fillable = [
-		'password','level','username','email','status_id','status'
+		'username','email','password','level'
 	];
 
 	protected $hidden = [
 		'password', 'remember_token',
 	];
 
-	public function petanis()
+	public function petani()
 	{
 		return $this->hasMany('App\petani');
 	}

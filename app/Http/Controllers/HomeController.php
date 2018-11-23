@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\User;
 use App\kepalatanaman;
+use App\pemantau;
+use App\petani;
+use App\Lahan;
 
 class HomeController extends Controller
 {
@@ -28,16 +31,16 @@ class HomeController extends Controller
     {
 
       if(Auth::User()->level==3){
-        $umum = kepalatanaman::find(Auth::User()->id)->first();
-        return view('KepalaTanaman.index',compact('umum'));
-      }
-      elseif(Auth::User()->level==2){
-        $umum = petani::find(Auth::User()->id)->first();
-        return view('Petani.index',compact('umum'));
+        $kepalatanaman = kepalatanaman::where('user_id', Auth::User()->id)->first();
+        return view('KepalaTanaman.index',compact('kepalatanaman'));
       }
       elseif(Auth::User()->level==1){
-        $umum = pemantau::find(Auth::User()->id)->first();
-        return view('Pemantau.index',compact('umum'));
+        $petani = petani::where('user_id', Auth::User()->id)->first();
+        return view('Petani.index',compact('petani'));
+      }
+      elseif(Auth::User()->level==2){
+        $pemantau = pemantau::where('user_id', Auth::User()->id)->first();
+        return view('Pemantau.index',compact('pemantau'));
       }
       else{
       return view('home');

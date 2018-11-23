@@ -14,10 +14,10 @@ class PemantauController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-     if (Auth::user()->status_id == 1) {
+{
+     if (Auth::user()->level == 1) {
        $pemantau = pemantau::where('email',Auth::user()->email)->first();
-       return view('pemantau.index',compact('pemantau'));
+       return view('admin.index',compact('pemantau'));
    } else {
      abort(404);
  }
@@ -103,12 +103,12 @@ class PemantauController extends Controller
         }
 
 
-        if ($mitra->isOuner()) {
+        if ($pemantau->isOuner()) {
             $user->update([
                 'email'     => $request->email,
             ]);
 
-            $mitra->update([
+            $pemantau->update([
                 'nama'     => $request->nama,
                 'nohp'     => $request->nohp,
                 'email'     => $request->email,

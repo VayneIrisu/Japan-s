@@ -30,10 +30,10 @@
                         {{ csrf_field() }}
                         <div class="form-group" id="form-isian">
                             <label for="title">Nama</label>
-                            <input type="text" name="name" class="form-control" placeholder="nama" value="{{ old('name') }}" required>
-                            @if ($errors->has('name'))
+                            <input type="text" name="nama" class="form-control" placeholder="nama" value="{{ old('nama') }}" required>
+                            @if ($errors->has('nama'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('name') }}</strong>
+                                <strong>{{ $errors->first('nama') }}</strong>
                             </span>
                             @endif
                             <label for="title">username</label>
@@ -106,10 +106,10 @@
                     {{ csrf_field() }}
                     <div class="form-group" id="form-isian">
                         <label for="title">Nama</label>
-                        <input type="text" name="name" class="form-control" placeholder="nama" value="{{ old('name') }}" required>
-                        @if ($errors->has('name'))
+                        <input type="text" name="nama" class="form-control" placeholder="nama" value="{{ old('nama') }}" required>
+                        @if ($errors->has('nama'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('name') }}</strong>
+                            <strong>{{ $errors->first('nama') }}</strong>
                         </span>
                         @endif
                         <label for="title">username</label>

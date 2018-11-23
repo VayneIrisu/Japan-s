@@ -1,17 +1,17 @@
 @extends('layouts.app')
-@section('title', $mitra->namaCv)
+@section('title', $pemantau->nama)
 @section('content')
 <div class="edit-profile">
 	<div class="grup-all-edit-profile">
 		<div class="image-form-edit">
-			<img src="{{$mitra->image}}" alt="">
-			{{-- <img src="{{$mitra->fotoKtp}}" alt=""> --}}
+			<img src="{{$pemantau->image}}" alt="">
+			{{-- <img src="{{$pemantau->fotoKtp}}" alt=""> --}}
 		</div>
 		<div class="form-edit-data">
-			<form action="/mitra/{{ $mitra->id }}" method="POST">
+			<form action="/pemantau/{{ $pemantau->id }}" method="POST">
 				<div class="form-group">
 					<label for="name" style="display: block;">Nama</label>
-					<input type="text" name="namaCv" placeholder="namaCv" value="{{ old('nama') ? old('nama') : $mitra->nama  }}">
+					<input type="text" name="nama" placeholder="nama" value="{{ old('nama') ? old('nama') : $pemantau->nama  }}">
 					@if ($errors->has('nama'))
 					<span class="help-block">
 						<strong>{{ $errors->first('nama') }}</strong>
@@ -20,7 +20,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name" style="display: block;">image</label>
-					<input type="text" name="image" value="{{ old('image') ? old('image') : $mitra->image  }}" placeholder="image">
+					<input type="text" name="image" value="{{ old('image') ? old('image') : $pemantau->image  }}" placeholder="image">
 					@if ($errors->has('image'))
 					<span class="help-block">
 						<strong>{{ $errors->first('image') }}</strong>
@@ -29,7 +29,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name" style="display: block;">nohp</label>
-					<input type="text" name="nohp" value="{{ old('nohp') ? old('nohp') : $mitra->nohp  }}" placeholder="nohp">
+					<input type="text" name="nohp" value="{{ old('nohp') ? old('nohp') : $pemantau->nohp  }}" placeholder="nohp">
 					@if ($errors->has('nohp'))
 					<span class="help-block">
 						<strong>{{ $errors->first('nohp') }}</strong>
@@ -38,7 +38,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name" style="display: block;">alamat</label>
-					<input type="text" name="alamat" value="{{ old('alamat') ? old('alamat') : $mitra->alamat  }}" placeholder="alamat">
+					<input type="text" name="alamat" value="{{ old('alamat') ? old('alamat') : $pemantau->alamat  }}" placeholder="alamat">
 					@if ($errors->has('alamat'))
 					<span class="help-block">
 						<strong>{{ $errors->first('alamat') }}</strong>
@@ -47,7 +47,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name" style="display: block;">email</label>
-					<input type="text" name="email" value="{{ old('email') ? old('email') : $mitra->email  }}" placeholder="email">
+					<input type="text" name="email" value="{{ old('email') ? old('email') : $pemantau->email  }}" placeholder="email">
 					@if ($errors->has('email'))
 					<span class="help-block">
 						<strong>{{ $errors->first('email') }}</strong>

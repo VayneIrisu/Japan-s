@@ -15,8 +15,9 @@ class KepalaTanamanController extends Controller
      */
     public function index()
     {
-       if (Auth::user()->status_id == 2) {
+       if (Auth::user()->level == 3) {
            $kepalatanaman = kepalatanaman::where('email',Auth::user()->email)->first();
+           dd($kepalatanaman);
            return view('kepalatanaman.index',compact('kepalatanaman'));
        } else {
            abort(404);
@@ -65,7 +66,6 @@ class KepalaTanamanController extends Controller
     public function edit($id)
     {
         $kepalatanaman = kepalatanaman::findOrFail($id);
-
         return view('kepalatanaman.profile', compact('kepalatanaman'));
     }
 
@@ -84,9 +84,10 @@ class KepalaTanamanController extends Controller
            // validari
             $this->validate($request,[
                 'email' => 'required|string',
-                'name' => 'required',
-                'nohp' => 'required',
+                'nama' => 'required',
+                'nik' => 'required',
                 'alamat' => 'required',
+                'nohp' => 'required',
                 'image' => 'required',
             ]);
         } else {
@@ -94,7 +95,8 @@ class KepalaTanamanController extends Controller
             $this->validate($request,[
                 'email' => 'required|string|email|max:255|unique:users',
                 'email' => 'required|string',
-                'name' => 'required',
+                'nama' => 'required',
+                'nik' => 'required',
                 'nohp' => 'required',
                 'alamat' => 'required',
                 'image' => 'required',
@@ -108,7 +110,8 @@ class KepalaTanamanController extends Controller
             ]);
 
             $kepalatanaman->update([
-                'name'     => $request->name,
+                'nama'     => $request->nama,
+                'nik'      => $request->nik,
                 'nohp'     => $request->nohp,
                 'email'     => $request->email,
                 'alamat'     => $request->alamat,
