@@ -51,10 +51,11 @@
                               <li><a href="#!" class="hover-all">Cari Lahan</a></li>
                               <li><a href="#!" class="hover-all">Liat Laporan</a></li>
                               @elseif (Auth::user()->level == 2)
-                              <li<a href="#!" class="hover-all">Buat Laporan</a>
+
+                              <li><a href="#!" class="hover-all">Buat Laporan</a>
                               </li>
                               @elseif (Auth::user()->level == 1)
-                              <li<a href="#!" class="hover-all">Tambah Lahan</a>
+                              <li><a href="#!" class="hover-all">Tambah Lahan</a>
                               </li>
                               @endif
 

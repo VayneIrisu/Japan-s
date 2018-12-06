@@ -14,7 +14,11 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @if (Auth::check())
+                    Anda sudah Login
+                    @else
+                    Silahkan mencoba login kembali
+                    @endif
                 </div>
             </div>
         </div>

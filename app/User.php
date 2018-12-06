@@ -18,6 +18,14 @@ class User extends Authenticatable
 		'password', 'remember_token',
 	];
 
+	public function laporan()
+	{
+		return $this->hasMany('App\Laporan');
+	}
+	public function lahan()
+	{
+		return $this->hasMany('App\Lahan');
+	}
 	public function petani()
 	{
 		return $this->hasMany('App\petani');

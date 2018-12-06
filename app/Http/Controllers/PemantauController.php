@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\pemantau;
 use App\User;
+use App\Laporan;
 use Illuminate\Http\Request;
 use Auth;
 class PemantauController extends Controller
